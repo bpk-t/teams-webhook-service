@@ -17,6 +17,10 @@ const commands = [
     'function': usdjp
   },
   {
+    'command': 'exchange',
+    'function': exchange
+  },
+  {
     'command': 'image',
     'function': imageTest
   },
@@ -113,6 +117,24 @@ function usdjp(requestBody) {
       return {
         "type": "message",
         "text": udjpy[0]
+      };
+  });
+}
+
+function exchange(requestBody) {
+  return rp('https://www.gaitameonline.com/rateaj/getrate').then((result) => {
+    const replacedReqText = requestBody.text.replace('&nbsp;', ' ')
+    const splits = replacedReqText.split(' ');
+    const currencyPairCode = splits[2].split('\n')[0];
+
+    const resultObj = JSON.parse(result);
+    const rate = resultObj.quotes
+      .filter(x => x.currencyPairCode.toUpperCase() == currencyPairCode.toUpperCase())
+      .map(x => `bid: ${x.bid}, ask: ${x.ask}`);
+    
+      return {
+        "type": "message",
+        "text": rate[0]
       };
   });
 }
