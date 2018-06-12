@@ -21,6 +21,10 @@ const commands = [
     'function': exchange
   },
   {
+    'command': 'omikuji',
+    'function': omikuji
+  },
+  {
     'command': 'image',
     'function': imageTest
   },
@@ -160,6 +164,40 @@ function debug(body) {
       {
         "type": "message",
         "text": JSON.stringify(body),
+      }
+    );
+  });
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+function omikuji(body) {
+  return new Promise((resolve, reject) => {
+    const types = [
+      "健康",
+      "体調",
+      "仕事",
+      "交渉",
+      "縁談",
+      "金運",
+      "商売",
+      "学問"
+    ];
+    const results = [
+      "大吉",
+      "中吉",
+      "小吉",
+      "にゃ～ん",
+      "んなぁ"
+    ];
+
+    resolve(
+      {
+        "type": "message",
+        "text": types.map(type => `「${type}」は、${results[getRandomInt(results.length - 1)]}です。`)
+          .reduce((acc, x) => acc + "\n\n" + x)
       }
     );
   });
