@@ -25,6 +25,10 @@ const commands = [
     'function': omikuji
   },
   {
+    'command': 'gohan',
+    'function': gohan
+  },
+  {
     'command': 'image',
     'function': imageTest
   },
@@ -198,6 +202,62 @@ function omikuji(body) {
         "type": "message",
         "text": types.map(type => `「${type}」は、${results[getRandomInt(results.length - 1)]}です。`)
           .reduce((acc, x) => acc + "\n\n" + x)
+      }
+    );
+  });
+}
+
+function gohan(body) {
+  return new Promise((resolve, reject) => {
+    const recommends = [
+      "寿司",
+      "刺し身",
+      "海鮮丼",
+      "丼もの",
+      "親子丼",
+      "牛丼",
+      "おでん",
+      "うどん",
+      "ラーメン",
+      "味噌ラーメン",
+      "醤油ラーメン",
+      "素麺",
+      "たこ焼き",
+      "お好み焼き",
+      "もんじゃ焼き",
+      "豆腐料理",
+      "もんじゃ焼き",
+      "メキシコ料理",
+      "シンガポール料理",
+      "タイ料理",
+      "中華料理",
+      "チャーハン",
+      "小籠包",
+      "餃子",
+      "パスタ",
+      "ピザ",
+      "カレー",
+      "ハヤシライス",
+      "オムライス",
+      "ハンバーグ",
+      "ハンバーガー",
+      "焼き肉",
+      "ステーキ",
+      "鉄板焼き",
+      "ジンギスカン",
+      "馬肉料理",
+      "串焼き",
+      "焼き鳥",
+      "ローストビーフ丼",
+      "鍋料理",
+      "おにぎり",
+      "すき焼き",
+      "しゃぶしゃぶ"
+    ];
+    resolve(
+      {
+        "type": "message",
+        "text": `今日のご飯は「${recommends[getRandomInt(recommends.length - 1)]}」とかどうでしょう。`
       }
     );
   });
